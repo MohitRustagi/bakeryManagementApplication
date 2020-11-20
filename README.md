@@ -1,1 +1,1 @@
-# bakeryManagementApplication
+# Bakery Management Application
