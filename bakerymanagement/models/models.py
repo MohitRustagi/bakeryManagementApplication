@@ -6,10 +6,10 @@ class Ingredient(models.Model):
     """Table for adding ingredient"""
     name = models.CharField(max_length=100, null=False)
     quantity = models.IntegerField(null=False, default=0)
-    cost_price = models.DecimalField(null=False, default=0.0)
-    selling_price = models.DecimalField(null=False)
+    cost_price = models.DecimalField(max_digits=5, decimal_places=3, null=False, default=0.0)
+    selling_price = models.DecimalField(max_digits=5, decimal_places=3, null=False)
     created_at = models.DateTimeField(auto_now_add=True, null=False)
-    updated_at = models.DateTimeField(auto_add=True, null=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class Product(models.Model):
@@ -20,19 +20,18 @@ class Product(models.Model):
 
 class ProductIngredient(models.Model):
     """Product to ingredient and vice-versa mapping"""
-    product = models.ForeignKey(Product)
-    ingredient = models.ForeignKey(Ingredient)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
 
 
 class Transaction(models.Model):
     """Maintains customer orders."""
-    product = models.ForeignKey(Product)
-    billed_amount = models.DecimalField(null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    billed_amount = models.DecimalField(max_digits=5, decimal_places=3)
     created_at = models.DateTimeField(auto_now_add=True)
-    # payment_status = models.ChoiceField(choices=PAYMENT_CHOICES)
-    customer = models.ForeignKey(User)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, null=False)
-    updated_at = models.DateTimeField(auto_add=True, null=False)
+    updated_at = models.DateTimeField(auto_now=True, null=False)
 
 
 
